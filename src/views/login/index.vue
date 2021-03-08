@@ -9,7 +9,7 @@
       label-position="left"
     >
 
-      <div class="title-container">
+      <div style="margin-bottom: 50px" class="title-container">
         <h3 class="title">
           <img src="@/assets/common/login-logo.png" alt="">
         </h3>
@@ -21,9 +21,9 @@
         </span>
         <el-input
           ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
-          name="username"
+          v-model="loginForm.mobile"
+          placeholder="输入宁的手机号"
+          name="mobile"
           type="text"
           tabindex="1"
           auto-complete="on"
@@ -57,8 +57,7 @@
         type="primary"
         style="width:100%;margin-bottom:30px;"
         @click.native.prevent="handleLogin"
-      >登录
-      </el-button>
+      >登录</el-button>
 
       <div class="tips">
         <span style="margin-right:20px;">账号: 13800000002</span>
@@ -128,22 +127,18 @@
         })
       },
       handleLogin() {
-        this.$refs.loginForm.validate(async isOK => {
-          if (isOK) {
-            try {
-              this.loading = true
-              // 只有校验通过了 我们才去调用action
-              await this['user/login'](this.loginForm)
-              // 应该登录成功之后
-              // async标记的函数实际上一个promise对象
-              // await下面的代码 都是成功执行的代码
-              this.$router.push('/')
-            } catch (error) {
-              console.log(error)
-            } finally {
-              //  不论执行try 还是catch  都去关闭转圈
-              this.loading = false
-            }
+        this.$refs.loginForm.validate(async(valid) => {
+          if (!valid) return this.$message.error('你在填什么!')
+          this.loading = true
+          try {
+            await this['user/login'](this.loginForm)
+            this.$router.push('/')
+            this.$message.success('登录成功')
+          } catch (err) {
+            console.log(err)
+            this.$message.error('登录失败')
+          } finally {
+            this.loading = false
           }
         })
       }

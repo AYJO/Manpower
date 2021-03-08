@@ -4,7 +4,7 @@ import { Message } from 'element-ui'
 
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // npm run dev => /api     npm run build => /prod-api
-  timeout: 8000
+  timeout: 5000
 }) // 创建一个axios的实例
 service.interceptors.request.use() // 请求拦截器
 // 响应拦截器
