@@ -64,6 +64,9 @@ export default {
       top: 0;
     }
   }
+  .sidebar-container {
+    background: -webkit-linear-gradient(bottom, #3d6df8, #5b8cff);
+  }
   .drawer-bg {
     background: #000;
     opacity: 0.3;
