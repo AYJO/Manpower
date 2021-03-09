@@ -43,7 +43,13 @@ service.interceptors.response.use(response => {
     return Promise.reject(new Error(message))
   }
 }, error => {
-  Message.error(error.message) // 提示错误信息
+  if (error.response && error.response.data && error.response.data.code === 10002) {
+    // 当后端返回的code为10002时  token超时 执行token超时相关逻辑 这个是后端检测超时 请求拦截器那里是前端检测 因为前端时间可以修改 直接修改电脑时间 所有需要后端检测介入
+    store.dispatch('user/logout')
+    router.push('/login')
+  } else {
+    Message.error(error.message) // 提示错误信息
+  }
   return Promise.reject(error) // 返回执行错误 让当前的执行链跳出成功 直接进入 catch
 })
 // 是否超时
