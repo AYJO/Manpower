@@ -1,18 +1,25 @@
 import request from '@/utils/request'
 
+// 登陆接口
 export function login(data) {
-  // 返回一个axios对象 => promise  // 返回了一个promise对象
+  // 返回一个axios对象 => promise
   return request({
-    url: '/sys/login', // 因为所有的接口都要跨域 表示所有的接口要带 /api
+    url: '/sys/login',
     method: 'post',
     data
   })
 }
 
-export function getInfo(token) {
-
+// 获取用户资料接口
+export function getUserInfo() {
+  return request({
+    url: '/sys/profile',
+    method: 'post'
+  })
 }
-
-export function logout() {
-
+// 获取用户的基本信息 -> 为了显示头像
+export function getUserDetailById(id) {
+  return request({
+    url: `/sys/user/${id}`
+  })
 }
